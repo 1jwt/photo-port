@@ -27,7 +27,16 @@
       <section id="portfolio">
           
         <ul class="grid">
-            <li>
+          <li>
+            <img src="img/topsail-20231.jpg" alt="Image 1">
+          </li>
+          <li>
+            <img src="img/topsail-20232.jpg" alt="Image 2">
+          </li>
+          <li>
+            <img src="img/topsail-20233.jpg" alt="Image 3">
+          </li> 
+          <li>
                 <img src="img/webtest.jpg" alt="Image 1">
               </li>
               <li>
@@ -90,6 +99,12 @@
             modalElement.style.display = 'block';
           });
         });
+
+        window.onclick = function(event) {
+    if (event.target == modalElement) {
+        modalElement.style.display = 'none';
+    }
+}
       </script>
 </body>
 </html>
