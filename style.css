@@ -24,19 +24,28 @@ img {
 }
 
 .container {
-  width: 80%;
-  margin: 0 auto;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  padding: 50px 8%;
 }
+.gallery{
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+grid-gap: 30px;
+}
+.gallery img{
+  width: 100%;
+}
+
 .photo {
   width: 30%;
   height: 300px;
   object-fit: cover;
-  border: 5px solid white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
 }
 
 main {
@@ -86,9 +95,10 @@ section {
 
 .modal .close {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 2rem;
+  right: 5rem;
   cursor: pointer;
+  font-size: xxx-large;
 }
 
 .modal .close:hover {
