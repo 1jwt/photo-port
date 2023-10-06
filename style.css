@@ -65,6 +65,16 @@ section {
   grid-gap: 1rem;
 }
 
+@media screen and (max-width: 800px) {
+  .grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .grid img {
+    height: 70%;
+    width: 70%;  
+  }
+}
+
 .grid li {
   list-style: none;
 }
