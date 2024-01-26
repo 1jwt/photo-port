@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  
+<meta charset="utf-8">
+<title>Photo Portfolio | NorthFork</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+    
+      </nav>
+<h1><center>Count me in!</h1>
+<hr>
+  
+    <main>
+        <div style="width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/ceK5e0DXc7Zh6" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/funny-encino-man-ceK5e0DXc7Zh6">via GIPHY</a></p>
+      </main>
+    
+      <footer>
+        <p>Copyright &copy; 2023 NorthFork</p>
+      </footer>
+    
+      <script>
+        const modalImageElement = document.querySelector('#modal-image');
+        const modalElement = document.querySelector('.modal');
+    
+        const gridImages = document.querySelectorAll('.grid img');
+    
+        gridImages.forEach(image => {
+          image.addEventListener('click', () => {
+            modalImageElement.src = image.src;
+    
+            modalElement.style.display = 'block';
+          });
+        });
+
+        window.onclick = function(event) {
+    if (event.target == modalElement) {
+        modalElement.style.display = 'none';
+    }
+}
+      </script>
+</body>
+</html>
