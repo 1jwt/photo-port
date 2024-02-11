@@ -43,7 +43,9 @@
           <div class="modal">
             <img id="modal-image" src="" alt="">
             <span class="close" onclick="document.querySelector('.modal').style.display = 'none'">×</span>
-          </div>
+            <a href="#" class="prev" onclick="changeImage(-1)">&#10094;</a>
+            <a href="#" class="next" onclick="changeImage(1)">&#10095;</a>
+        </div>
         </section>
       </main>
     
@@ -52,25 +54,30 @@
       </footer>
     
       <script>
+        let currentImageIndex = 0;
         const modalImageElement = document.querySelector('#modal-image');
         const modalElement = document.querySelector('.modal');
+        const gridImages = Array.from(document.querySelectorAll('.grid img'));
     
-        const gridImages = document.querySelectorAll('.grid img');
+        function changeImage(direction) {
+            currentImageIndex = (currentImageIndex + direction + gridImages.length) % gridImages.length;
+            modalImageElement.src = gridImages[currentImageIndex].src;
+        }
     
-        gridImages.forEach(image => {
-          image.addEventListener('click', () => {
-            modalImageElement.src = image.src;
-    
-            modalElement.style.display = 'block';
-          });
+        gridImages.forEach((image, index) => {
+            image.addEventListener('click', () => {
+                currentImageIndex = index;
+                modalImageElement.src = image.src;
+                modalElement.style.display = 'block';
+            });
         });
-
+    
         window.onclick = function(event) {
-    if (event.target == modalElement) {
-        modalElement.style.display = 'none';
-    }
-}
-      </script>
+            if (event.target == modalElement) {
+                modalElement.style.display = 'none';
+            }
+        }
+    </script>
 
 <script defer async data-host="northfork.blog" src="https://liteanalytics.com/lite.js"></script>
 </body>
