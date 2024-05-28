@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+  
+<meta charset="utf-8">
+<title>Draws | NorthFork</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="p.html">Photos</a>
+        <a href="d.html">Draws</a>
+    
+      </nav>
+<h1><center>Draws</h1>
+<hr>
+  
+    <main>
+      <section id="portfolio">
+          
+        <ul class="grid">
+          <li><img src="img/sp242.jpeg" alt="Image 1"></li>
+          <li><img src="img/sp243.jpeg" alt="Image 1"></li>
+          <li><img src="img/sp244.jpeg" alt="Image 1"></li>
+          </ul>
+    
+          <div class="modal">
+            <img id="modal-image" src="" alt="">
+            <span class="close" onclick="document.querySelector('.modal').style.display = 'none'">×</span>
+            <a href="#" class="prev" onclick="changeImage(-1)">&#10094;</a>
+            <a href="#" class="next" onclick="changeImage(1)">&#10095;</a>
+        </div>
+        </section>
+      </main>
+    
+      <footer>
+        <p>Copyright &copy; 2024 NorthFork</p>
+      </footer>
+    
+      <script>
+        let currentImageIndex = 0;
+        const modalImageElement = document.querySelector('#modal-image');
+        const modalElement = document.querySelector('.modal');
+        const gridImages = Array.from(document.querySelectorAll('.grid img'));
+    
+        function changeImage(direction) {
+            currentImageIndex = (currentImageIndex + direction + gridImages.length) % gridImages.length;
+            modalImageElement.src = gridImages[currentImageIndex].src;
+        }
+    
+        gridImages.forEach((image, index) => {
+            image.addEventListener('click', () => {
+                currentImageIndex = index;
+                modalImageElement.src = image.src;
+                modalElement.style.display = 'block';
+            });
+        });
+    
+        window.onclick = function(event) {
+            if (event.target == modalElement) {
+                modalElement.style.display = 'none';
+            }
+        }
+    </script>
+
+<script defer async data-host="northfork.blog" src="https://liteanalytics.com/lite.js"></script>
+</body>
+</html>
