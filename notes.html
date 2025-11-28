@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Northfork.Notes</title>
+    <title>Northfork Notes</title>
     <style>
         * {
             margin: 0;
@@ -12,209 +11,206 @@
             box-sizing: border-box;
         }
 
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #ffffff;
+            color: #37352f;
+            line-height: 1.6;
+        }
 
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        background: #ffffff;
-        color: #37352f;
-        line-height: 1.6;
-    }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
 
-    .container {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 60px 40px;
-    }
+        h1 {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #37352f;
+        }
 
-    h1 {
-        font-size: 40px;
-        font-weight: 700;
-        margin-bottom: 40px;
-        color: #37352f;
-    }
+        .blocks {
+            margin-bottom: 20px;
+        }
 
-    .blocks {
-        margin-bottom: 20px;
-    }
+        .block {
+            display: flex;
+            align-items: flex-start;
+            gap: 4px;
+            padding: 3px 8px;
+            margin: 2px -8px;
+            border-radius: 3px;
+            transition: background-color 0.1s;
+        }
 
-    .block {
-        display: flex;
-        align-items: flex-start;
-        gap: 4px;
-        padding: 3px 8px;
-        margin: 2px -8px;
-        border-radius: 3px;
-        transition: background-color 0.1s;
-    }
+        .block:hover {
+            background-color: #f7f6f3;
+        }
 
-    .block:hover {
-        background-color: #f7f6f3;
-    }
+        .block-controls {
+            display: flex;
+            gap: 2px;
+            opacity: 0;
+            transition: opacity 0.1s;
+            padding-top: 4px;
+        }
 
-    .block-controls {
-        display: flex;
-        gap: 2px;
-        opacity: 0;
-        transition: opacity 0.1s;
-        padding-top: 4px;
-    }
+        .block:hover .block-controls {
+            opacity: 1;
+        }
 
-    .block:hover .block-controls {
-        opacity: 1;
-    }
+        .block-btn {
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+            color: #9b9a97;
+            transition: background-color 0.1s;
+        }
 
-    .block-btn {
-        width: 24px;
-        height: 24px;
-        border: none;
-        background: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 3px;
-        color: #9b9a97;
-        transition: background-color 0.1s;
-    }
+        .block-btn:hover {
+            background-color: #e3e2e0;
+        }
 
-    .block-btn:hover {
-        background-color: #e3e2e0;
-    }
+        .drag-handle {
+            cursor: grab;
+        }
 
-    .drag-handle {
-        cursor: grab;
-    }
+        .drag-handle:active {
+            cursor: grabbing;
+        }
 
-    .drag-handle:active {
-        cursor: grabbing;
-    }
+        .block-content {
+            flex: 1;
+            position: relative;
+        }
 
-    .block-content {
-        flex: 1;
-        position: relative;
-    }
+        .block textarea,
+        .block input[type="text"] {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
+            resize: none;
+            font-family: inherit;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #37352f;
+            padding: 3px 2px;
+        }
 
-    .block textarea,
-    .block input[type="text"] {
-        width: 100%;
-        border: none;
-        outline: none;
-        background: transparent;
-        resize: none;
-        font-family: inherit;
-        font-size: 16px;
-        line-height: 1.6;
-        color: #37352f;
-        padding: 3px 2px;
-    }
+        .block textarea::placeholder {
+            color: #9b9a97;
+        }
 
-    .block textarea::placeholder {
-        color: #9b9a97;
-    }
+        .block-heading textarea {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
 
-    .block-heading textarea {
-        font-size: 32px;
-        font-weight: 700;
-        line-height: 1.3;
-    }
+        .block-code textarea {
+            font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+            font-size: 14px;
+            background: #f7f6f3;
+            padding: 12px;
+            border-radius: 3px;
+            min-height: 80px;
+        }
 
-    .block-code textarea {
-        font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
-        font-size: 14px;
-        background: #f7f6f3;
-        padding: 12px;
-        border-radius: 3px;
-        min-height: 80px;
-    }
+        .block-todo {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
 
-    .block-todo {
-        display: flex;
-        gap: 8px;
-        align-items: flex-start;
-    }
+        .block-todo input[type="checkbox"] {
+            margin-top: 6px;
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
 
-    .block-todo input[type="checkbox"] {
-        margin-top: 6px;
-        cursor: pointer;
-        width: 16px;
-        height: 16px;
-    }
+        .block-todo.checked textarea {
+            text-decoration: line-through;
+            color: #9b9a97;
+        }
 
-    .block-todo.checked textarea {
-        text-decoration: line-through;
-        color: #9b9a97;
-    }
+        .block-list {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+        }
 
-    .block-list {
-        display: flex;
-        gap: 8px;
-        align-items: flex-start;
-    }
+        .block-list-marker {
+            color: #9b9a97;
+            padding-top: 6px;
+            min-width: 20px;
+        }
 
-    .block-list-marker {
-        color: #9b9a97;
-        padding-top: 6px;
-        min-width: 20px;
-    }
+        .add-block-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            border: none;
+            background: none;
+            color: #9b9a97;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 3px;
+            transition: background-color 0.1s;
+            margin-left: -8px;
+        }
 
-    .add-block-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 4px 8px;
-        border: none;
-        background: none;
-        color: #9b9a97;
-        cursor: pointer;
-        font-size: 14px;
-        border-radius: 3px;
-        transition: background-color 0.1s;
-        margin-left: -8px;
-    }
+        .add-block-btn:hover {
+            background-color: #f7f6f3;
+        }
 
-    .add-block-btn:hover {
-        background-color: #f7f6f3;
-    }
+        .type-menu {
+            position: absolute;
+            top: 32px;
+            left: 0;
+            background: white;
+            border: 1px solid #e3e2e0;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            min-width: 200px;
+            padding: 4px;
+        }
 
-    .type-menu {
-        position: absolute;
-        top: 32px;
-        left: 0;
-        background: white;
-        border: 1px solid #e3e2e0;
-        border-radius: 6px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        z-index: 100;
-        min-width: 200px;
-        padding: 4px;
-    }
+        .type-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 3px;
+            font-size: 14px;
+            color: #37352f;
+            transition: background-color 0.1s;
+        }
 
-    .type-menu-item {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 6px 10px;
-        border: none;
-        background: none;
-        width: 100%;
-        text-align: left;
-        cursor: pointer;
-        border-radius: 3px;
-        font-size: 14px;
-        color: #37352f;
-        transition: background-color 0.1s;
-    }
+        .type-menu-item:hover {
+            background-color: #f7f6f3;
+        }
 
-    .type-menu-item:hover {
-        background-color: #f7f6f3;
-    }
-
-    .dragging {
-        opacity: 0.5;
-    }
-</style>
-```
-
+        .dragging {
+            opacity: 0.5;
+        }
+    </style>
 </head>
 <body>
  <nav>
@@ -234,256 +230,257 @@
         </button>
     </div>
 
-```
-<script>
-    let blocks = [];
-    let draggedElement = null;
-    let draggedBlockId = null;
+    <script>
+        let blocks = [];
+        let draggedElement = null;
+        let draggedBlockId = null;
 
-    // Load blocks from localStorage
-    function loadBlocks() {
-        const saved = localStorage.getItem('notion-lite-blocks');
-        if (saved) {
-            blocks = JSON.parse(saved);
-        } else {
-            blocks = [{ id: Date.now(), type: 'paragraph', content: '', checked: false }];
-        }
-        renderBlocks();
-    }
-
-    // Save blocks to localStorage
-    function saveBlocks() {
-        localStorage.setItem('notion-lite-blocks', JSON.stringify(blocks));
-    }
-
-    // Render all blocks
-    function renderBlocks() {
-        const container = document.getElementById('blocks');
-        container.innerHTML = '';
-        
-        blocks.forEach((block, index) => {
-            const blockEl = createBlockElement(block, index);
-            container.appendChild(blockEl);
-        });
-    }
-
-    // Create a block element
-    function createBlockElement(block, index) {
-        const div = document.createElement('div');
-        div.className = 'block';
-        div.draggable = true;
-        div.dataset.blockId = block.id;
-
-        div.ondragstart = (e) => {
-            draggedElement = div;
-            draggedBlockId = block.id;
-            div.classList.add('dragging');
-        };
-
-        div.ondragend = () => {
-            div.classList.remove('dragging');
-            draggedElement = null;
-            draggedBlockId = null;
-        };
-
-        div.ondragover = (e) => {
-            e.preventDefault();
-            if (!draggedBlockId || draggedBlockId === block.id) return;
-            
-            const draggedBlock = blocks.find(b => b.id === draggedBlockId);
-            blocks = blocks.filter(b => b.id !== draggedBlockId);
-            const targetIndex = blocks.findIndex(b => b.id === block.id);
-            blocks.splice(targetIndex, 0, draggedBlock);
-            renderBlocks();
-            saveBlocks();
-        };
-
-        // Controls
-        const controls = document.createElement('div');
-        controls.className = 'block-controls';
-        controls.innerHTML = `
-            <button class="block-btn drag-handle" title="Drag to reorder">⋮⋮</button>
-            <button class="block-btn" onclick="showTypeMenu(event, ${block.id})" title="Change type">+</button>
-        `;
-
-        // Content
-        const content = document.createElement('div');
-        content.className = 'block-content';
-        content.innerHTML = getBlockHTML(block, index);
-
-        // Delete button
-        const deleteBtn = document.createElement('button');
-        deleteBtn.className = 'block-btn';
-        deleteBtn.innerHTML = '🗑';
-        deleteBtn.title = 'Delete';
-        deleteBtn.onclick = () => deleteBlock(block.id);
-
-        div.appendChild(controls);
-        div.appendChild(content);
-        div.appendChild(deleteBtn);
-
-        return div;
-    }
-
-    // Get HTML for different block types
-    function getBlockHTML(block, index) {
-        const onInput = `updateBlockContent(${block.id}, event)`;
-        const onKeyDown = `handleKeyDown(event, ${block.id})`;
-
-        switch (block.type) {
-            case 'heading':
-                return `<div class="block-heading"><textarea placeholder="Heading" oninput="${onInput}" onkeydown="${onKeyDown}" rows="1">${block.content}</textarea></div>`;
-            
-            case 'todo':
-                const checked = block.checked ? 'checked' : '';
-                const checkedClass = block.checked ? 'checked' : '';
-                return `<div class="block-todo ${checkedClass}">
-                    <input type="checkbox" ${checked} onchange="toggleTodo(${block.id}, event)">
-                    <textarea placeholder="To-do" oninput="${onInput}" onkeydown="${onKeyDown}" rows="1">${block.content}</textarea>
-                </div>`;
-            
-            case 'bullet':
-                return `<div class="block-list">
-                    <div class="block-list-marker">•</div>
-                    <textarea placeholder="List" oninput="${onInput}" onkeydown="${onKeyDown}" rows="1">${block.content}</textarea>
-                </div>`;
-            
-            case 'numbered':
-                return `<div class="block-list">
-                    <div class="block-list-marker">${index + 1}.</div>
-                    <textarea placeholder="List" oninput="${onInput}" onkeydown="${onKeyDown}" rows="1">${block.content}</textarea>
-                </div>`;
-            
-            case 'code':
-                return `<div class="block-code"><textarea placeholder="Code" oninput="${onInput}" onkeydown="${onKeyDown}" rows="3">${block.content}</textarea></div>`;
-            
-            default:
-                return `<textarea placeholder="Type something..." oninput="${onInput}" onkeydown="${onKeyDown}" rows="1">${block.content}</textarea>`;
-        }
-    }
-
-    // Update block content
-    function updateBlockContent(id, event) {
-        const block = blocks.find(b => b.id === id);
-        if (block) {
-            block.content = event.target.value;
-            saveBlocks();
-            
-            // Auto-resize textarea
-            event.target.style.height = 'auto';
-            event.target.style.height = event.target.scrollHeight + 'px';
-        }
-    }
-
-    // Toggle todo checkbox
-    function toggleTodo(id, event) {
-        const block = blocks.find(b => b.id === id);
-        if (block) {
-            block.checked = event.target.checked;
-            saveBlocks();
+        // Load blocks from localStorage
+        function loadBlocks() {
+            const saved = localStorage.getItem('notion-lite-blocks');
+            if (saved) {
+                blocks = JSON.parse(saved);
+            } else {
+                blocks = [{ id: Date.now(), type: 'paragraph', content: '', checked: false }];
+            }
             renderBlocks();
         }
-    }
 
-    // Handle keyboard shortcuts
-    function handleKeyDown(event, id) {
-        if (event.key === 'Enter' && !event.shiftKey) {
-            event.preventDefault();
-            addBlock(id);
-        } else if (event.key === 'Backspace' && event.target.value === '') {
-            event.preventDefault();
-            deleteBlock(id);
+        // Save blocks to localStorage
+        function saveBlocks() {
+            localStorage.setItem('notion-lite-blocks', JSON.stringify(blocks));
         }
-    }
 
-    // Add a new block
-    function addBlock(afterId = null) {
-        const newBlock = { id: Date.now(), type: 'paragraph', content: '', checked: false };
-        
-        if (afterId) {
-            const index = blocks.findIndex(b => b.id === afterId);
-            blocks.splice(index + 1, 0, newBlock);
-        } else {
-            blocks.push(newBlock);
+        // Render all blocks
+        function renderBlocks() {
+            const container = document.getElementById('blocks');
+            container.innerHTML = '';
+            
+            blocks.forEach((block, index) => {
+                const blockEl = createBlockElement(block, index);
+                container.appendChild(blockEl);
+            });
         }
-        
-        saveBlocks();
-        renderBlocks();
-        
-        setTimeout(() => {
-            const blockEl = document.querySelector(`[data-block-id="${newBlock.id}"]`);
-            const textarea = blockEl?.querySelector('textarea');
-            textarea?.focus();
-        }, 0);
-    }
 
-    // Delete a block
-    function deleteBlock(id) {
-        if (blocks.length === 1) {
-            blocks = [{ id: Date.now(), type: 'paragraph', content: '', checked: false }];
-        } else {
-            blocks = blocks.filter(b => b.id !== id);
-        }
-        saveBlocks();
-        renderBlocks();
-    }
+        // Create a block element
+        function createBlockElement(block, index) {
+            const div = document.createElement('div');
+            div.className = 'block';
+            div.draggable = true;
+            div.dataset.blockId = block.id;
 
-    // Show type menu
-    function showTypeMenu(event, blockId) {
-        event.stopPropagation();
-        
-        // Remove existing menu
-        const existing = document.querySelector('.type-menu');
-        if (existing) existing.remove();
-        
-        const menu = document.createElement('div');
-        menu.className = 'type-menu';
-        
-        const types = [
-            { type: 'paragraph', label: 'Text', icon: 'T' },
-            { type: 'heading', label: 'Heading', icon: 'H' },
-            { type: 'todo', label: 'To-do', icon: '☐' },
-            { type: 'bullet', label: 'Bullet list', icon: '•' },
-            { type: 'numbered', label: 'Numbered list', icon: '1.' },
-            { type: 'code', label: 'Code', icon: '</>' }
-        ];
-        
-        types.forEach(({ type, label, icon }) => {
-            const item = document.createElement('button');
-            item.className = 'type-menu-item';
-            item.innerHTML = `<span>${icon}</span><span>${label}</span>`;
-            item.onclick = () => {
-                changeBlockType(blockId, type);
-                menu.remove();
+            div.ondragstart = (e) => {
+                draggedElement = div;
+                draggedBlockId = block.id;
+                div.classList.add('dragging');
             };
-            menu.appendChild(item);
-        });
-        
-        event.target.parentElement.parentElement.querySelector('.block-content').appendChild(menu);
-        
-        // Close menu when clicking outside
-        setTimeout(() => {
-            document.addEventListener('click', function closeMenu() {
-                menu.remove();
-                document.removeEventListener('click', closeMenu);
-            }, 0);
-        }, 0);
-    }
 
-    // Change block type
-    function changeBlockType(id, type) {
-        const block = blocks.find(b => b.id === id);
-        if (block) {
-            block.type = type;
+            div.ondragend = () => {
+                div.classList.remove('dragging');
+                draggedElement = null;
+                draggedBlockId = null;
+            };
+
+            div.ondragover = (e) => {
+                e.preventDefault();
+                if (!draggedBlockId || draggedBlockId === block.id) return;
+                
+                const draggedBlock = blocks.find(b => b.id === draggedBlockId);
+                blocks = blocks.filter(b => b.id !== draggedBlockId);
+                const targetIndex = blocks.findIndex(b => b.id === block.id);
+                blocks.splice(targetIndex, 0, draggedBlock);
+                renderBlocks();
+                saveBlocks();
+            };
+
+            // Controls
+            const controls = document.createElement('div');
+            controls.className = 'block-controls';
+            controls.innerHTML = `
+                <button class="block-btn drag-handle" title="Drag to reorder">⋮⋮</button>
+                <button class="block-btn" onclick="showTypeMenu(event, ${block.id})" title="Change type">+</button>
+            `;
+
+            // Content
+            const content = document.createElement('div');
+            content.className = 'block-content';
+            content.innerHTML = getBlockHTML(block, index);
+
+            // Delete button
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'block-btn';
+            deleteBtn.innerHTML = '🗑';
+            deleteBtn.title = 'Delete';
+            deleteBtn.onclick = () => deleteBlock(block.id);
+
+            div.appendChild(controls);
+            div.appendChild(content);
+            div.appendChild(deleteBtn);
+
+            return div;
+        }
+
+        // Get HTML for different block types
+        function getBlockHTML(block, index) {
+            const onInput = `updateBlockContent(${block.id}, event)`;
+            const onKeyDown = `handleKeyDown(event, ${block.id})`;
+
+            switch (block.type) {
+                case 'heading':
+                    return `<div class="block-heading"><textarea placeholder="Heading" oninput="${onInput}" onkeydown="${onKeyDown}" rows="1">${block.content}</textarea></div>`;
+                
+                case 'todo':
+                    const checked = block.checked ? 'checked' : '';
+                    const checkedClass = block.checked ? 'checked' : '';
+                    return `<div class="block-todo ${checkedClass}">
+                        <input type="checkbox" ${checked} onchange="toggleTodo(${block.id}, event)">
+                        <textarea placeholder="To-do" oninput="${onInput}" onkeydown="${onKeyDown}" rows="1">${block.content}</textarea>
+                    </div>`;
+                
+                case 'bullet':
+                    return `<div class="block-list">
+                        <div class="block-list-marker">•</div>
+                        <textarea placeholder="List" oninput="${onInput}" onkeydown="${onKeyDown}" rows="1">${block.content}</textarea>
+                    </div>`;
+                
+                case 'numbered':
+                    return `<div class="block-list">
+                        <div class="block-list-marker">${index + 1}.</div>
+                        <textarea placeholder="List" oninput="${onInput}" onkeydown="${onKeyDown}" rows="1">${block.content}</textarea>
+                    </div>`;
+                
+                case 'code':
+                    return `<div class="block-code"><textarea placeholder="Code" oninput="${onInput}" onkeydown="${onKeyDown}" rows="3">${block.content}</textarea></div>`;
+                
+                default:
+                    return `<textarea placeholder="Type something..." oninput="${onInput}" onkeydown="${onKeyDown}" rows="1">${block.content}</textarea>`;
+            }
+        }
+
+        // Update block content
+        function updateBlockContent(id, event) {
+            const block = blocks.find(b => b.id === id);
+            if (block) {
+                block.content = event.target.value;
+                saveBlocks();
+                
+                // Auto-resize textarea
+                event.target.style.height = 'auto';
+                event.target.style.height = event.target.scrollHeight + 'px';
+            }
+        }
+
+        // Toggle todo checkbox
+        function toggleTodo(id, event) {
+            const block = blocks.find(b => b.id === id);
+            if (block) {
+                block.checked = event.target.checked;
+                saveBlocks();
+                renderBlocks();
+            }
+        }
+
+        // Handle keyboard shortcuts
+        function handleKeyDown(event, id) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                const currentBlock = blocks.find(b => b.id === id);
+                const newType = (currentBlock.type === 'bullet' || currentBlock.type === 'numbered' || currentBlock.type === 'todo') 
+                    ? currentBlock.type 
+                    : 'paragraph';
+                addBlock(id, newType);
+            } else if (event.key === 'Backspace' && event.target.value === '') {
+                event.preventDefault();
+                deleteBlock(id);
+            }
+        }
+
+        // Add a new block
+        function addBlock(afterId = null, type = 'paragraph') {
+            const newBlock = { id: Date.now(), type: type, content: '', checked: false };
+            
+            if (afterId) {
+                const index = blocks.findIndex(b => b.id === afterId);
+                blocks.splice(index + 1, 0, newBlock);
+            } else {
+                blocks.push(newBlock);
+            }
+            
+            saveBlocks();
+            renderBlocks();
+            
+            setTimeout(() => {
+                const blockEl = document.querySelector(`[data-block-id="${newBlock.id}"]`);
+                const textarea = blockEl?.querySelector('textarea');
+                textarea?.focus();
+            }, 0);
+        }
+
+        // Delete a block
+        function deleteBlock(id) {
+            if (blocks.length === 1) {
+                blocks = [{ id: Date.now(), type: 'paragraph', content: '', checked: false }];
+            } else {
+                blocks = blocks.filter(b => b.id !== id);
+            }
             saveBlocks();
             renderBlocks();
         }
-    }
 
-    // Initialize
-    loadBlocks();
-</script>
-```
+        // Show type menu
+        function showTypeMenu(event, blockId) {
+            event.stopPropagation();
+            
+            // Remove existing menu
+            const existing = document.querySelector('.type-menu');
+            if (existing) existing.remove();
+            
+            const menu = document.createElement('div');
+            menu.className = 'type-menu';
+            
+            const types = [
+                { type: 'paragraph', label: 'Text', icon: 'T' },
+                { type: 'heading', label: 'Heading', icon: 'H' },
+                { type: 'todo', label: 'To-do', icon: '☐' },
+                { type: 'bullet', label: 'Bullet list', icon: '•' },
+                { type: 'numbered', label: 'Numbered list', icon: '1.' },
+                { type: 'code', label: 'Code', icon: '</>' }
+            ];
+            
+            types.forEach(({ type, label, icon }) => {
+                const item = document.createElement('button');
+                item.className = 'type-menu-item';
+                item.innerHTML = `<span>${icon}</span><span>${label}</span>`;
+                item.onclick = () => {
+                    changeBlockType(blockId, type);
+                    menu.remove();
+                };
+                menu.appendChild(item);
+            });
+            
+            event.target.parentElement.parentElement.querySelector('.block-content').appendChild(menu);
+            
+            // Close menu when clicking outside
+            setTimeout(() => {
+                document.addEventListener('click', function closeMenu() {
+                    menu.remove();
+                    document.removeEventListener('click', closeMenu);
+                }, 0);
+            }, 0);
+        }
 
+        // Change block type
+        function changeBlockType(id, type) {
+            const block = blocks.find(b => b.id === id);
+            if (block) {
+                block.type = type;
+                saveBlocks();
+                renderBlocks();
+            }
+        }
+
+        // Initialize
+        loadBlocks();
+    </script>
 </body>
 </html>
